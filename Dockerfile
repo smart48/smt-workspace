@@ -139,7 +139,7 @@ USER root
 COPY ./composer.json /home/laradock/.composer/composer.json
 
 # Add the auth.json for magento 2 credentials
-COPY ./auth.json /home/laradock/.composer/auth.json
+# COPY ./auth.json /home/laradock/.composer/auth.json
 
 # Make sure that ~/.composer belongs to laradock
 RUN chown -R laradock:laradock /home/laradock/.composer
@@ -160,13 +160,13 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
 ;fi
 
 # Check if auth file is disabled
-ARG COMPOSER_AUTH=false
-ENV COMPOSER_AUTH ${COMPOSER_AUTH}
+# ARG COMPOSER_AUTH=false
+# ENV COMPOSER_AUTH ${COMPOSER_AUTH}
 
-RUN if [ ${COMPOSER_AUTH} = false ]; then \
-    # remove the file
-    rm /home/laradock/.composer/auth.json \
-;fi
+# RUN if [ ${COMPOSER_AUTH} = false ]; then \
+#     # remove the file
+#     rm /home/laradock/.composer/auth.json \
+# ;fi
 
 ARG COMPOSER_REPO_PACKAGIST
 ENV COMPOSER_REPO_PACKAGIST ${COMPOSER_REPO_PACKAGIST}
@@ -180,22 +180,37 @@ RUN echo "" >> ~/.bashrc && \
     echo 'export PATH="~/.composer/vendor/bin:$PATH"' >> ~/.bashrc
 
 ###########################################################################
+# SSH2:
+###########################################################################
+
+USER root
+
+ARG INSTALL_SSH2=true
+
+RUN if [ ${INSTALL_SSH2} = true ]; then \
+  # Install the PHP SSH2 extension
+  apt-get -y install libssh2-1-dev php7.4-ssh2 \
+;fi
+
+###########################################################################
 # ssh:
 ###########################################################################
 
-ARG INSTALL_WORKSPACE_SSH=true
+# ARG INSTALL_WORKSPACE_SSH=true
 
-COPY insecure_id_rsa /tmp/id_rsa
-COPY insecure_id_rsa.pub /tmp/id_rsa.pub
+# Do not want to add the keys to the image. We will probably add them manually 
+# later on
+# COPY insecure_id_rsa /tmp/id_rsa
+# COPY insecure_id_rsa.pub /tmp/id_rsa.pub
 
-RUN if [ ${INSTALL_WORKSPACE_SSH} = true ]; then \
-    rm -f /etc/service/sshd/down && \
-    cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys \
-        && cat /tmp/id_rsa.pub >> /root/.ssh/id_rsa.pub \
-        && cat /tmp/id_rsa >> /root/.ssh/id_rsa \
-        && rm -f /tmp/id_rsa* \
-        && chmod 644 /root/.ssh/authorized_keys /root/.ssh/id_rsa.pub \
-    && chmod 400 /root/.ssh/id_rsa \
-    && cp -rf /root/.ssh /home/laradock \
-    && chown -R laradock:laradock /home/laradock/.ssh \
-;fi
+# RUN if [ ${INSTALL_WORKSPACE_SSH} = true ]; then \
+#     rm -f /etc/service/sshd/down && \
+#     cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys \
+#         && cat /tmp/id_rsa.pub >> /root/.ssh/id_rsa.pub \
+#         && cat /tmp/id_rsa >> /root/.ssh/id_rsa \
+#         && rm -f /tmp/id_rsa* \
+#         && chmod 644 /root/.ssh/authorized_keys /root/.ssh/id_rsa.pub \
+#     && chmod 400 /root/.ssh/id_rsa \
+#     && cp -rf /root/.ssh /home/laradock \
+#     && chown -R laradock:laradock /home/laradock/.ssh \
+# ;fi
