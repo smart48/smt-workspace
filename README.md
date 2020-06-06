@@ -33,6 +33,12 @@ You can test the build image using:
 docker run --name smt-workspace -d smart48/smt-workspace:latest
 ```
 
+and enter using
+
+```
+docker exec -it smt-workspace bash
+```
+
 ## Docker Push
 
 And then to push the built image you run:
