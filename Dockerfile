@@ -214,3 +214,19 @@ RUN if [ ${INSTALL_SSH2} = true ]; then \
 #     && cp -rf /root/.ssh /home/laradock \
 #     && chown -R laradock:laradock /home/laradock/.ssh \
 # ;fi
+
+#
+#--------------------------------------------------------------------------
+# Final Touch
+#--------------------------------------------------------------------------
+#
+
+USER root
+
+# Clean up
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    rm /var/log/lastlog /var/log/faillog
+
+# Set default work directory
+WORKDIR /code
