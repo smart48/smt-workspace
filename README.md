@@ -14,3 +14,29 @@ Keys needed to access Workspace from the terminal. Not sure why we would need to
 ## Crontabs
 
 Could be added like in original but now we use crontab job. There is also PHP Worker with supervisord.
+
+## Docker Build
+
+To build for our own Smart48 Docker Hub repository we use
+
+```
+docker build . -t smart48/smt-workspace
+```
+
+This will build with the tag using our organization's name and name for the image.
+
+## Test
+
+You can test the build image using:
+
+```
+docker run --name smt-workspace -p 81:80 -d smart48/smt-workspace:latest
+```
+
+## Docker Push
+
+And then to push the built image you run:
+
+```
+docker image push smart48/smt-workspace
+```
