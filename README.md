@@ -9,7 +9,7 @@ Based on Laradock Workspace
 
 ## SSH
 
-Keys needed to access Workspace from the terminal. Not sure why we would need to copy the private key yet..
+Keys needed to access Workspace from the terminal. Not sure why we would need to copy the private key yet. Also, if we want this image to stay public we cannot built with private keys.
 
 ## Crontabs
 
