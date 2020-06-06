@@ -30,7 +30,7 @@ This will build with the tag using our organization's name and name for the imag
 You can test the build image using:
 
 ```
-docker run --name smt-workspace -p 2222:22 -d smart48/smt-workspace:latest
+docker run --name smt-workspace -d smart48/smt-workspace:latest
 ```
 
 ## Docker Push
