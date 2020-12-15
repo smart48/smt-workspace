@@ -38,8 +38,8 @@ You will on listing then see the newly added version:
 
 ```
 docker images |grep smt-workspace
-smart48/smt-mysql              1.0                 9aae819f7c46        7 days ago          545MB
-smart48/smt-mysql              latest              9aae819f7c46        7 days ago          545MB
+smart48/smt-workspace          1.0          aaeffd791159   5 minutes ago   931MB
+smart48/smt-workspace          latest       aaeffd791159   5 minutes ago   931MB
 ```
 ## Test
 
